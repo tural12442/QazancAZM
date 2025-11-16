@@ -34,7 +34,7 @@ body{
   50%{background-position:100% 50%;}
   100%{background-position:0% 50%;}
 }
-.container{max-width:480px;margin:auto;padding:20px;padding-top:40px;} /* padding-top azaldıldı */
+.container{max-width:480px;margin:auto;padding:20px;padding-top:40px;}
 .page{display:none;animation:fadeIn .4s ease;}
 .page.active{display:block;}
 @keyframes fadeIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
@@ -43,14 +43,16 @@ body{
   background:var(--card-bg);
   border-radius:25px;
   padding:30px 22px;
-  margin-bottom:30px; /* margin azaldıldı */
+  margin-bottom:30px;
   box-shadow:0 12px 40px rgba(0,0,0,0.25);
   backdrop-filter:blur(14px);
   text-align:center;
   border:1px solid var(--card-border);
   transition:transform 0.3s;
 }
-.balance-card:hover{transform:scale(1.02);}
+.balance-card:hover{
+  transform:scale(1.02);
+}
 .balance-card h3{
   font-size:18px;
   color:var(--accent);
@@ -74,7 +76,7 @@ body{
   box-shadow:0 10px 38px rgba(0,0,0,0.3);
   backdrop-filter:blur(15px);
   border:1px solid var(--card-border);
-  margin-top:-10px; /* reklam kartını yuxarı çəkmək üçün */
+  margin-top:-10px;
 }
 .ad-card h2{
   font-size:22px;color:var(--text-dark);
@@ -106,7 +108,8 @@ body{
   background-size:200% 200%;
   box-shadow:0 0 18px var(--btn-shadow);
 }
-.ad-btn:hover{
+/* Hover effekti yalnız waiting olmayan zaman */
+.ad-btn:hover:not(.waiting){
   transform:scale(1.05);
   box-shadow:0 0 25px var(--btn-shadow);
 }
@@ -261,20 +264,29 @@ function update(){
 update();
 
 const adBtn=document.getElementById('adBtn'),msg=document.getElementById('msg');
-adBtn.onclick=()=>{
-  if(cnt>=LIMIT){msg.textContent='📣 Gündəlik limitə çatdınız!';return;}
-  adBtn.disabled=true;msg.textContent='İzlənir...';
-  try{if(typeof show_10024800==='function'){show_10024800();}}catch(e){}
+adBtn.onclick = () => {
+  if(cnt >= LIMIT){ msg.textContent='📣 Gündəlik limitə çatdınız!'; return; }
+  adBtn.disabled = true;
+  adBtn.classList.add('waiting'); // hover və transform effekti deaktiv
+  msg.textContent='İzlənir...';
+  
+  try{ if(typeof show_10024800==='function'){ show_10024800(); } } catch(e){}
+  
   setTimeout(()=>{
-    bal+=REWARD;cnt++;update();
+    bal += REWARD; cnt++; update();
     msg.textContent='✅ +0.01 ₼ əlavə olundu!';
-    let s=10;
-    const t=setInterval(()=>{
+    let s = 10;
+    const t = setInterval(()=>{
       msg.textContent=`⏳ ${s}s gözləyin`;
       s--;
-      if(s<0){clearInterval(t);adBtn.disabled=false;msg.textContent='';}
+      if(s < 0){
+        clearInterval(t);
+        adBtn.disabled = false;
+        adBtn.classList.remove('waiting'); // effekti aktiv et
+        msg.textContent='';
+      }
     },1000);
-  },2500);
+  }, 2500);
 };
 
 const joinBtn=document.getElementById('joinBtn');
