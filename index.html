@@ -34,7 +34,7 @@ body{
   50%{background-position:100% 50%;}
   100%{background-position:0% 50%;}
 }
-.container{max-width:480px;margin:auto;padding:20px;padding-top:70px;}
+.container{max-width:480px;margin:auto;padding:20px;padding-top:40px;} /* padding-top azaldıldı */
 .page{display:none;animation:fadeIn .4s ease;}
 .page.active{display:block;}
 @keyframes fadeIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
@@ -43,7 +43,7 @@ body{
   background:var(--card-bg);
   border-radius:25px;
   padding:30px 22px;
-  margin-bottom:40px;
+  margin-bottom:30px; /* margin azaldıldı */
   box-shadow:0 12px 40px rgba(0,0,0,0.25);
   backdrop-filter:blur(14px);
   text-align:center;
@@ -74,6 +74,7 @@ body{
   box-shadow:0 10px 38px rgba(0,0,0,0.3);
   backdrop-filter:blur(15px);
   border:1px solid var(--card-border);
+  margin-top:-10px; /* reklam kartını yuxarı çəkmək üçün */
 }
 .ad-card h2{
   font-size:22px;color:var(--text-dark);
@@ -225,20 +226,15 @@ let bal=parseFloat(safeGet(BAL_KEY,0));
 let cnt=parseInt(safeGet(COUNT_KEY,0));
 let resetTime=safeGet(RESET_KEY,null);
 
-/* =============================
-   🇦🇿 Azərbaycan vaxtı ilə 23:00 reset
-   ============================= */
 function getNextResetTime(){
   const now = new Date();
-  const AZ_OFFSET = 4; // UTC+4
+  const AZ_OFFSET = 4;
   let resetUTC = new Date(Date.UTC(
     now.getUTCFullYear(),
     now.getUTCMonth(),
     now.getUTCDate(),
-    23 - AZ_OFFSET,
-    0,0,0
+    23 - AZ_OFFSET,0,0,0
   ));
-
   if(now.getTime() > resetUTC.getTime()){
     resetUTC.setUTCDate(resetUTC.getUTCDate() + 1);
   }
