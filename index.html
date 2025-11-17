@@ -174,7 +174,7 @@ body{
     </div>
 
     <div class="ad-card">
-      <h2>Gündəlik Reklamlar</h2>
+      <h2>Reklamlar</h2>
       <p>Hər reklama görə <b>0.01 ₼</b> qazanın</p>
       <div class="stats">
         <div class="stat"><span id="adsCount">0</span><label>İzlənən</label></div>
@@ -190,7 +190,7 @@ body{
   <!-- Görəvlər -->
   <div id="tasksPage" class="page">
     <div class="task-card">
-      <h2>🎯 Premium Tapşırıq</h2>
+      <h2> Tapşırıq</h2>
       <p>Kanala qoşul və <b>1 ₼</b> bonus qazan!</p>
       <button id="joinBtn">Kanala Qoşul</button>
     </div>
@@ -290,11 +290,11 @@ adBtn.onclick = () => {
 };
 
 const joinBtn=document.getElementById('joinBtn');
-if(localStorage.getItem(JOIN_KEY)){joinBtn.textContent='✅ Bonus alındı!';joinBtn.disabled=true;}
+if(localStorage.getItem(JOIN_KEY)){joinBtn.textContent='Tamamlandı';joinBtn.disabled=true;}
 joinBtn.onclick=()=>{
   if(localStorage.getItem(JOIN_KEY))return;
   bal+=1;safeSet(BAL_KEY,bal);localStorage.setItem(JOIN_KEY,'1');
-  joinBtn.textContent='✅ Bonus alındı!';joinBtn.disabled=true;
+  joinBtn.textContent='Tamamlandı';joinBtn.disabled=true;
   window.open('https://t.me/qazancazicmasi','_blank');
   update();
 };
